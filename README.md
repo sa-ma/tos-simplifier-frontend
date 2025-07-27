@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TOS Simplifier Frontend
+
+A  web application that simplifies Terms of Service documents.
+
+## Features
+
+- 📄 **PDF Upload**: Drag and drop or click to upload PDF files
+- 🎯 **Simplification Levels**: Choose from 8th grade or 12th grade level
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Language**: TypeScript
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd tos-simplifier-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.local.example .env.local
+# Edit .env.local with your API base URL
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Upload a PDF**: Click the upload area or drag and drop a PDF file containing Terms of Service
+2. **Select Level**: Choose between 8th grade or 12th grade simplification level
+3. **Simplify**: Click the "Simplify Document" button to process your file (this may take a few moments)
+4. **View Results**: Explore the simplified content organized in tabs by section
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Integration
 
-## Deploy on Vercel
+The frontend integrates with a real backend API at `http://167.71.128.30/simplify` that accepts:
+- `file`: PDF file (multipart/form-data)
+- `level`: Simplification level (8th or 12th)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The backend URL is configured via the `API_BASE_URL` environment variable.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Example API Request
+```bash
+curl -X POST "http://167.71.128.30/simplify?level=8th" -F "file=@duolingo-tos.pdf"
+```
+
+The API returns a JSON response with simplified sections organized by category.
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/simplify/
+│   │   └── route.ts          # Mock API endpoint
+│   ├── globals.css           # Global styles
+│   ├── layout.tsx            # Root layout
+│   └── page.tsx              # Main application page
+├── components/
+│   └── ui/                   # shadcn/ui components
+└── lib/
+    └── utils.ts              # Utility functions
+```
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+### Adding New Components
+
+To add new shadcn/ui components:
+```bash
+npx shadcn@latest add <component-name>
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
